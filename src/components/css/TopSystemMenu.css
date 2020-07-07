@@ -1,0 +1,15 @@
+.top-system-menu{
+    -webkit-app-region: drag;
+    width: 100%;
+    height:50px;
+    display: flex;
+}
+.top-system-menu-padding{
+    flex-grow: 1;
+}
+.top-system-menu-content{
+    -webkit-app-region: no-drag;
+    text-align: right;
+    float: right;
+    
+}
