@@ -1,9 +1,18 @@
 {
   "name": "qqmusic_for_linux",
-  "version": "0.1.0",
+  "version": "0.9.0",
   "private": true,
-  "main": "main.js",
+  "main": "public/electron.js",
   "homepage": ".",
+  "author": "inkneko <legendlxh@gmail.com>",
+  "description": "HeiMusic Alpha version",
+  "build": {
+    "appId": "com.inkneko.heimusic",
+    "files": ["!node_modules"],
+	  "linux": {
+		  "target": ["deb"]
+	  }
+  },
   "dependencies": {
     "@material-ui/core": "^4.10.2",
     "@material-ui/icons": "^4.9.1",
@@ -20,7 +29,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron-start": "electron .",
-    "package": "electron-packager ./ qq_music_for_linux --out ./electron-build --electron-version 9.0.4 --overwrite"
+    "electron-build": "electron-builder -l --x64 --dir",
+	"electron-pack": "electron-builder -l --x64"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -39,6 +49,7 @@
   },
   "devDependencies": {
     "electron": "^9.0.4",
-    "electron-packager": "^14.2.1"
+    "electron-builder": "^22.7.0",
+    "heiMusicConfig": "file:../src/config.js"
   }
 }
