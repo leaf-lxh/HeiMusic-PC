@@ -21,9 +21,9 @@ import VolumePanel from "./VolumePanel";
 
 const https = window.require("https")
 const http = window.require("http")
-const remote = window.require("electron").remote
 const fs = window.require("fs")
-const config = remote.require("./config")
+const remote = window.require("electron").remote
+const config = remote.require("./heiMusicConfig")
 const ipcRenderer = window.require("electron").ipcRenderer;
 
 const MusicSlider = withStyles({
@@ -133,6 +133,19 @@ class MusicPlayer extends React.Component{
             }
         })
 
+        ipcRenderer.on("music-player-saveHistory-callback",(event,data)=>{
+            config.saveHistory(this.currentTid, this.playlist, this.currentPlayIndex, this.audio.currentTime)
+            ipcRenderer.sendSync('window-control', {action: "quit"})
+        })
+
+        let history = config.getHistory()
+        if (history !== null){
+            this.playlist = history.playlist
+            this.currentTid = history.tid
+            this.currentPlayIndex = history.index
+            this.PlayMusic(this.playlist[this.currentPlayIndex], history.playedTime, false)
+        }
+
         //播放本地文件
         // console.log(config.bin)
         // this.audio.src = "data:audio/mp3;base64,"+config.bin
@@ -209,7 +222,7 @@ class MusicPlayer extends React.Component{
        this.PlayMusic(event.list[event.index])
     }
 
-    setAudio(resourceURL){
+    setAudio(resourceURL, playedTime=0, play=true){
         this.audio.src = resourceURL
         this.audio.ontimeupdate =function(){
             let spentMinutes = Math.floor(this.audio.currentTime / 60)
@@ -227,10 +240,15 @@ class MusicPlayer extends React.Component{
                 durationLabel: `${spentMinutes}:${spentSeconds} / ${durationMinutes}:${durationSeconds}`
             })
         }.bind(this)
-
-        this.audio.play()
+        this.audio.onloadedmetadata = function(){
+            this.audio.currentTime = playedTime
+        }.bind(this)
+        
         this.audio.volume = this.state.volume / 100
-        this.setState({ playBtnIcon: <PauseCircleFilled style={{fontSize: 42}}/>})
+        if (play === true){
+            this.audio.play()
+            this.setState({ playBtnIcon: <PauseCircleFilled style={{fontSize: 42}}/>})
+        } 
     }
 
     PlayEndEvent(){
@@ -243,7 +261,7 @@ class MusicPlayer extends React.Component{
         this.PlayMusic(this.playlist[this.currentPlayIndex])
     }
 
-    PlayMusic(musicInfo){
+    PlayMusic(musicInfo, playedTime=0, play=true){
         this.audioInfo = {
             song_cover_pmid: musicInfo.album_ptid,
             song_name: musicInfo.song_name,
@@ -300,7 +318,7 @@ class MusicPlayer extends React.Component{
                 extension = "mp3"
             }
             let resourceURL = this.audio.src = `data:audio/${extension};base64,${fs.readFileSync(`${config.downloadRootPath}/${filename}`, "base64")}`
-            this.setAudio(resourceURL)
+            this.setAudio(resourceURL, playedTime, play)
             return
         }
 
@@ -338,7 +356,7 @@ class MusicPlayer extends React.Component{
                             this.audio.src = ""
                             return
                         }
-                        this.setAudio(resourceURL)
+                        this.setAudio(resourceURL, playedTime, play)
                     }.bind(this))
                 }.bind(this)).end()
             }.bind(this))
@@ -352,7 +370,7 @@ class MusicPlayer extends React.Component{
         this.setState({progress: newValue})
         this.audio.currentTime = this.audio.duration * (newValue/100)
         if (this.audio.paused === true){
-            this.audio.play()
+            this.OnPauseEvent()
         }
     }
 
