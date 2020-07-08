@@ -3,6 +3,7 @@ build/
 #electron-builder results:
 electron-build/
 
+package-lock.json
 # Logs
 logs
 *.log
