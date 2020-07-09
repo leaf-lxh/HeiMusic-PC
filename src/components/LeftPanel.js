@@ -21,7 +21,7 @@ class LeftPanel extends React.Component{
         return (
             <>
                 <div className="left-panel-logo-wrap">
-                    <img className="left-panel-logo" src="logo.jpeg"/>
+                    <img className="left-panel-logo" src="logo.jpg"/>
                     <div className="left-panel-appname">HeiMusic!</div>
                     
                 </div>

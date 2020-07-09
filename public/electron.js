@@ -14,7 +14,7 @@ const url = require('url')
 
 let mainWindow
 let dev = false
-let iconPath = path.join(__dirname, './logo.jpeg')
+let iconPath = path.join(__dirname, './logo.jpg')
 if (dev === true){
 	iconPath = path.join(__dirname, './baseline_build_circle_black_18dp.png')
 }

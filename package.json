@@ -10,8 +10,13 @@
     "appId": "com.inkneko.heimusic",
     "files": ["!node_modules"],
 	  "linux": {
+      "icon": "build/app-logo.icns",
 		  "target": ["deb"]
-	  }
+    },
+    "win":{
+      "icon": "build/app-logo.ico",
+      "target": ["zip"]
+    }
   },
   "dependencies": {
     "@material-ui/core": "^4.10.2",
