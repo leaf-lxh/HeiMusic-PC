@@ -40,6 +40,7 @@ function createWindow () {
 		switch(data.action){
 			case "quit":
 				app.quit();
+				app.quit();
 				break;
 			case "minimize":
 				mainWindow.minimize()
