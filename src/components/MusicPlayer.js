@@ -201,6 +201,7 @@ class MusicPlayer extends React.Component{
         else{
             this.currentPlayIndex += 1
         }
+
         
         this.PlayMusic(this.playlist[this.currentPlayIndex])
     }
@@ -262,6 +263,7 @@ class MusicPlayer extends React.Component{
     }
 
     PlayMusic(musicInfo, playedTime=0, play=true){
+        config.saveHistory(this.currentTid, this.playlist, this.currentPlayIndex, this.audio.currentTime)
         this.audioInfo = {
             song_cover_pmid: musicInfo.album_ptid,
             song_name: musicInfo.song_name,
