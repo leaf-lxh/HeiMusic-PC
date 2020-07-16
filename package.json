@@ -35,7 +35,7 @@
     "eject": "react-scripts eject",
     "electron-start": "electron .",
     "electron-build": "electron-builder -l --x64 --dir",
-	"electron-pack": "electron-builder -l --x64"
+	"electron-pack": "electron-builder -l --x64",
 	"electron-pack-win": "electron-builder -w --x64"
   },
   "eslintConfig": {
