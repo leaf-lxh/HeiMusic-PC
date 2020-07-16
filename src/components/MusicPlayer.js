@@ -295,21 +295,11 @@ class MusicPlayer extends React.Component{
             return
         }
 
-
         this.setState({
             music_cover_url: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicInfo.album_pmid}.jpg`,
             music_name: musicInfo.song_name,
-            music_singer: musicInfo.singer,
-            qulity: qualityName,
-            qulityColor: qulityColor
+            music_singer: musicInfo.singer
         })
-
-        let data =`{"queryvkey":{"module":"vkey.GetVkeyServer","method":"CgiGetVkey","param":{"guid":"8397041246","songmid":["${musicInfo.mid}"],"songtype":[1],"filename" : [ "${filename}" ],"uin":"${config.login_uin}","loginflag":1,"platform":"20"}},"comm":{"uin":${config.login_uin},"format":"json","ct":19,"cv":1733}}`
-        let option = {
-            hostname: "inkneko.com",
-            port: 8080,
-            path: `/cgi-bin/load.py?-=${encodeURIComponent(data)}`
-        }
 
         if (fs.existsSync(`${config.downloadRootPath}/${filename}`)===true){
             let extension = ""
@@ -320,10 +310,31 @@ class MusicPlayer extends React.Component{
                 extension = "mp3"
             }
             let resourceURL = this.audio.src = `data:audio/${extension};base64,${fs.readFileSync(`${config.downloadRootPath}/${filename}`, "base64")}`
+
+            this.setState({
+                qulity: qualityName,
+                qulityColor: qulityColor
+            })
             this.setAudio(resourceURL, playedTime, play)
             return
         }
+        else if (config.cookie === ""){ //登录失效的简易判断
+            qualityName = "128kpbs"
+            qulityColor = "black"
+            filename = `M500${musicInfo.file.media_fid}.mp3`
+        }
 
+        this.setState({
+            qulity: qualityName,
+            qulityColor: qulityColor
+        })
+
+        let data =`{"queryvkey":{"module":"vkey.GetVkeyServer","method":"CgiGetVkey","param":{"guid":"8397041246","songmid":["${musicInfo.mid}"],"songtype":[1],"filename" : [ "${filename}" ],"uin":"${config.login_uin}","loginflag":1,"platform":"20"}},"comm":{"uin":${config.login_uin},"format":"json","ct":19,"cv":1733}}`
+        let option = {
+            hostname: "inkneko.com",
+            port: 8080,
+            path: `/cgi-bin/load.py?-=${encodeURIComponent(data)}`
+        }
         https.request(option, function(event){
             let response = ""
             event.on("data", function(chunk){
