@@ -131,12 +131,14 @@ class MusicListDisplay extends React.Component{
         }
 
         var options ={
-            host: 'inkneko.com',
-            port: 8080,
+            host: 'c.y.qq.com',
+            port: 443,
             method: "GET",
-            path: `/cgi-bin/proxy.py?-=getListInfo&dissid=${this.tid}&login_uin=${this.loginUser}`
+            headers:{
+                "Referer": `https://y.qq.com/n/yqq/playlist/${this.tid}.html`
+            },
+            path: `/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg?type=1&json=1&utf8=1&onlysong=0&new_format=1&disstid=${this.tid}&loginUin=${this.loginUser}&format=json&inCharset=utf8&outCharset=utf-8`
         }
-        console.log(`/cgi-bin/proxy.py?-=getListInfo&dissid=${this.tid}&login_uin=${this.loginUser}`)
         let callback = function(response)
         {
             let str =""
