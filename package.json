@@ -8,14 +8,20 @@
   "description": "HeiMusic Alpha version",
   "build": {
     "appId": "com.inkneko.heimusic",
-    "files": ["!node_modules"],
-	  "linux": {
+    "files": [
+      "!node_modules"
+    ],
+    "linux": {
       "icon": "build/app-logo.icns",
-		  "target": ["deb"]
+      "target": [
+        "deb"
+      ]
     },
-    "win":{
+    "win": {
       "icon": "build/app-logo.ico",
-      "target": ["zip"]
+      "target": [
+        "zip"
+      ]
     }
   },
   "dependencies": {
@@ -35,8 +41,8 @@
     "eject": "react-scripts eject",
     "electron-start": "electron .",
     "electron-build": "electron-builder -l --x64 --dir",
-	"electron-pack": "electron-builder -l --x64",
-	"electron-pack-win": "electron-builder -w --x64"
+    "electron-pack": "electron-builder -l --x64",
+    "electron-pack-win": "electron-builder -w --x64"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -55,7 +61,6 @@
   },
   "devDependencies": {
     "electron": "^9.0.4",
-    "electron-builder": "^22.7.0",
-    "heiMusicConfig": "file:../src/config.js"
+    "electron-builder": "^22.7.0"
   }
 }
