@@ -46,6 +46,7 @@ class LeftPanel extends React.Component{
                             <Button classes={{root: "panel-button", label: "panel-button-content"}} id={"songlist-7447082410"} onClick={this.ListBtnOnclick.bind(this, 7447082410)}>钢琴</Button>
                             <Button classes={{root: "panel-button", label: "panel-button-content"}} id={"songlist-7429072758"} onClick={this.ListBtnOnclick.bind(this, 7429072758)}>まらしい</Button>
                             <Button classes={{root: "panel-button", label: "panel-button-content"}} id={"songlist-7428205990"} onClick={this.ListBtnOnclick.bind(this, 7428205990)}>VOCALOID</Button>
+							<Button classes={{root: "panel-button", label: "panel-button-content"}} id={"songlist-7418329791"} onClick={this.ListBtnOnclick.bind(this, 7418329791)}>local music</Button>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
             </>
